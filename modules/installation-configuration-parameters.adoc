@@ -49,6 +49,7 @@
 // * installing/installing_vsphere/installing-vsphere-installer-provisioned-network-customizations.adoc
 // * installing/installing_azure_stack_hub/installing-azure-stack-hub-default.adoc
 // * installing/installing_azure_stack_hub/installing-azure-stack-hub-customizations.adoc
+// * installing/installing_nutanix/installing-nutanix-installer-provisioned.adoc
 
 ifeval::["{context}" == "installing-alibaba-customizations"]
 :alibabacloud:
@@ -198,6 +199,9 @@ endif::[]
 ifeval::["{context}" == "installing-azure-stack-hub-network-customizations"]
 :ash:
 endif::[]
+ifeval::["{context}" == "installing-nutanix-installer-provisioned"]
+:nutanix:
+endif::[]
 
 :_content-type: CONCEPT
 [id="installation-configuration-parameters_{context}"]
@@ -248,7 +252,7 @@ The string must be 14 characters or fewer long.
 endif::osp[]
 
 |`platform`
-|The configuration for the specific platform upon which to perform the installation: `alibabacloud`, `aws`, `baremetal`, `azure`, `ibmcloud`, `openstack`, `ovirt`, `vsphere`, or `{}`. For additional information about `platform.<platform>` parameters, consult the table for your specific platform that follows.
+|The configuration for the specific platform upon which to perform the installation: `alibabacloud`, `aws`, `baremetal`, `azure`, `ibmcloud`, `nutanix` `openstack`, `ovirt`, `vsphere`, or `{}`. For additional information about `platform.<platform>` parameters, consult the table for your specific platform that follows.
 |Object
 
 ifndef::openshift-origin[]
@@ -1525,6 +1529,51 @@ Additional Alibaba Cloud configuration parameters are described in the following
 
 endif::alibabacloud[]
 
+ifdef::nutanix[]
+[id="installation-configuration-parameters-additional-vsphere_{context}"]
+== Additional Nutanix configuration parameters
+
+Additional Nutanix configuration parameters are described in the following table:
+
+.Additional Nutanix cluster parameters
+[cols=".^2,.^3a,.^3a",options="header"]
+|====
+|Parameter|Description|Values
+
+|`platform.nutanix.apiVIP`
+|The virtual IP (VIP) address that you configured for control plane API access.
+|IP address.
+
+|`platform.nutanix.ingressVIP`
+|The virtual IP (VIP) address that you configured for cluster ingress.
+|IP address.
+
+|`platform.nutanix.password`
+|The password for the Prism Central user name.
+|String
+
+|`platform.nutanix.port`
+|The port used to log into Prism Central.
+|String
+
+|`platform.nutanix.PrismCentral`
+|The Prism Central domain name or IP address.
+|String
+
+|`platform.nutanix.prismElementUUID`
+|The universally unique identifier (UUID) for Prism Element.
+|String
+
+|`platform.vsphere.subnetUUID`
+|The UUID of the subnet that is linked to the Prism Element that is managing the {product-title} cluster.
+|String
+
+|`platform.nutanix.username`
+|The username for logging into Prism Central.
+|String.
+|====
+endif::nutanix[]
+
 ifdef::bare[]
 :!bare:
 endif::bare[]
@@ -1663,4 +1712,7 @@ ifeval::["{context}" == "installing-azure-stack-hub-default"]
 endif::[]
 ifeval::["{context}" == "installing-azure-stack-hub-network-customizations"]
 :!ash:
+endif::[]
+ifeval::["{context}" == "installing-nutanix-installer-provisioned"]
+:!nutanix:
 endif::[]

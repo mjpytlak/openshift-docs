@@ -1,0 +1,98 @@
+// Module included in the following assemblies:
+//
+// * installing/installing_nutanix/configuring-iam-nutanix.adoc
+
+:_content-type: PROCEDURE
+[id="manually-create-iam-nutanix_{context}"]
+= Configuring IAM for Nutanix
+
+Installing the cluster requires that the Cloud Credential Operator (CCO) operate in manual mode. While the installation program configures the CCO for manual mode, you must specify the identity and access management secrets.
+
+.Prerequisites
+
+* You have configured the `ccoctl` binary.
+* You have an existing `install-config.yaml` file.
+* You have set the following environment variables:
++
+`NUTANIX_ENDPOINT`:: Specifies the endpoint for Prism Central.
+`Nutanix_PORT`:: Specifies the port that is used to log into Prism Central.
+`NUTANIX_USER`:: Specifies the username that is used to log into Prism Central.
+`NUTANIX_PASSWORD`:: Specifies the password that is used to log into Prism Central.
+
+.Procedure
+
+. Edit the `install-config.yaml` configuration file so that the `credentialsMode` parameter is set to `Manual`.
++
+.Example `install-config.yaml` configuration file
+[source,yaml]
+----
+apiVersion: v1
+baseDomain: cluster1.example.com
+credentialsMode: Manual <1>
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
+...
+----
+<1> Add this line to set the `credentialsMode` parameter to `Manual`.
+
+. Extract the list of CredentialsRequest custom resources (CRs) from the {product-title} release image:
++
+[source,terminal]
+----
+$ oc adm release extract --credentials-requests --cloud=nutanix \
+--to=<path_to_directory_with_list_of_credentials_requests>/credrequests \
+quay.io/<path_to>/ocp-release:<version>
+----
+
+. Use the `ccoctl` tool to process all of the `CredentialsRequest` objects in the `credrequests` directory:
++
+[source,terminal]
+----
+$ ccoctl nutanix create-shared-secrets \
+--credentials-requests-dir=<path_to_directory_with_list_of_credentials_requests>/credrequests \ <1>
+--output-dir=<destination_directory> <2>
+----
++
+<1> Specifies the path to the directory that contains the files for the component `CredentialsRequests` objects.
+<2> Specifies the directory that contains the files of the component credentials secrets, under the `manifests` directory.
++
+.Sample `CredentialsRequest` object
+[source,yaml]
+----
+  apiVersion: cloudcredential.openshift.io/v1
+  kind: CredentialsRequest
+  metadata:
+    annotations:
+      include.release.openshift.io/self-managed-high-availability: "true"
+    labels:
+      controller-tools.k8s.io: "1.0"
+    name: openshift-machine-api-nutanix
+    namespace: openshift-cloud-credential-operator
+  spec:
+    providerSpec:
+      apiVersion: cloudcredential.openshift.io/v1
+      kind: NutanixProviderSpec
+    secretRef:
+      name: nutanix-credentials
+      namespace: openshift-machine-api
+----
+
+. Create the installation manifests:
++
+[source,terminal]
+----
+$ openshift-install create manifests --dir <installation_directory><1>
+----
+<1> `<installation_directory>` specifies the name of the directory that contains the `install-config.yaml` file for your cluster.
+
+. Copy the generated credential files to the target manifests directory:
++
+[source,terminal]
+----
+$ cp <output_dir>/manifests/*credentials.yaml ./<installation_directory>/manifests
+----
+
+.Verification
+
+* Ensure that the appropriate secrets were generated in your cluster's `manifests` directory.

@@ -1,0 +1,13 @@
+// Module included in the following assemblies:
+//
+// * installing/installing_nutanix/preparing-to-install-nutanix.adoc
+
+:_content-type: CONCEPT
+[id="nutanix-csi-driver-reqs_{context}"]
+= Nutanix CSI Driver Operator requirements
+
+The following requirements must be met in order to install the CSI Driver Operator:
+
+* <To do>
+* <To do>
+* <To do>

@@ -1,0 +1,19 @@
+// Module included in the following assemblies:
+//
+// * installing/installing_nutanix/preparing-to-install-nutanix.adoc
+
+:_content-type: CONCEPT
+[id="installation-nutanix-infrastructure_{context}"]
+= Nutanix version requirements
+
+You must install the {product-title} cluster on Nutanix AOS version <to do> (6.0.1 or later?) that meets the following requirements.
+
+
+.Version requirements for Nutanix virtual environments
+[cols=2, options="header"]
+|===
+|Virtual environment product |Required version
+|VM hardware version | TBD
+|Nutanix AHV | TBD
+|Prism Central | TBD
+|===

@@ -17,14 +17,20 @@ endif::[]
 ifeval::["{context}" == "cco-mode-gcp-workload-identity"]
 :google-cloud-platform:
 endif::[]
+ifeval::["{context}" == "preparing-to-install-on-nutanix"]
+:nutanix:
+endif::[]
 
 :_content-type: PROCEDURE
 [id="cco-ccoctl-configuring_{context}"]
 = Configuring the Cloud Credential Operator utility
+ifdef::nutanix[]
+The Cloud Credential Operator (CCO) manages cloud provider credentials as Kubernetes custom resource definitions (CRDs). Installing a cluster on Nutanix requires that you set the CCO to `manual` mode as part of the installation process.
+endif::nutanix[]
 
 To create and manage cloud credentials from outside of the cluster when the Cloud Credential Operator (CCO) is operating in
 ifdef::aws-sts[manual mode with STS,]
-ifdef::ibm-cloud[manual mode,]
+ifdef::ibm-cloud,nutanix[manual mode,]
 ifdef::google-cloud-platform[manual mode with GCP Workload Identity,]
 extract and prepare the CCO utility (`ccoctl`) binary.
 
@@ -156,4 +162,7 @@ ifeval::["{context}" == "manually-creating-alibaba-ram"]
 endif::[]
 ifeval::["{context}" == "cco-mode-gcp-workload-identity"]
 :!google-cloud-platform:
+endif::[]
+ifeval::["{context}" == "preparing-to-install-on-nutanix"]
+:!nutanix:
 endif::[]
