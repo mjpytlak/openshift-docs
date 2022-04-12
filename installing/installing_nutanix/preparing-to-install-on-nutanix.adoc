@@ -9,5 +9,6 @@ toc::[]
 Before you install a cluster, be sure that your Nutanix environment meets the following requirements.
 
 include::modules/installation-nutanix-infrastructure.adoc[leveloffset=+1]
+include::modules/nutanix-csi-driver-reqs.adoc[leveloffset=+1]
 include::modules/installation-nutanix-installer-infra-reqs.adoc[leveloffset=+1]
 include::modules/cco-ccoctl-configuring.adoc[leveloffset=+1]

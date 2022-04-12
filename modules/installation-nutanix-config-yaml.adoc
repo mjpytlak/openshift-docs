@@ -17,28 +17,16 @@ This sample YAML file is provided for reference only. You must obtain your `inst
 ----
 apiVersion: v1
 baseDomain: example.com <1>
-compute: <2>
-- hyperthreading: Enabled <3>
+compute: <2> <3>
+- hyperthreading: Enabled <4>
   name: worker
+  platform: {}
   replicas: 3
-  platform:
-    nutanix: <4>
-      cpus: 2
-      coresPerSocket: 2
-      memoryMiB: 8196
-      osDisk:
-        diskSizeGiB: 120
-controlPlane: <2>
-  hyperthreading: Enabled <3>
+controlPlane: <2> <3>
+  hyperthreading: Enabled <4>
   name: master
+  platform: {}
   replicas: 3
-  platform:
-    nutanix: <4>
-      cpus: 4
-      coresPerSocket: 2
-      memoryMiB: 16384
-      osDisk:
-        diskSizeGiB: 120
 metadata:
   creationTimestamp: null
   name: test-cluster <1>
@@ -60,58 +48,43 @@ platform:
   nutanix:
     apiVIP: 10.40.142.7 <1>
     ingressVIP: 10.40.142.8 <1>
-    prismCentral:
-      endpoint:
-        address: your.prismcentral.domainname <1>
-        port: 9440 <1>
     password: samplepassword <1>
-    username: sampleadmin <1>
-    prismElements:
-    - endpoint:
-        address: your.prismelement.domainname
-        port: 9440
-      uuid: 0005b0f1-8f43-a0f2-02b7-3cecef193712
-    subnetUUIDs:
-    - c7938dc6-7659-453e-a688-e26020c68e43
-ifndef::openshift-origin[]
-    clusterOSImage: http://example.com/images/rhcos-47.83.202103221318-0-nutanix.x86_64.ova <5>
-endif::openshift-origin[]
-ifdef::openshift-origin[]
-    clusterOSImage: http://example.com/images/rhcos-47.83.202103221318-0-nutanix.x86_64.ova <5>
-endif::openshift-origin[]
+    port: "9440" <1>
+    prismCentral: your.prismcentral.domainname <1>
+    prismElementUUID: 0005b0f1-8f43-a0f2-02b7-3cecef193712
+    subnetUUID: c7938dc6-7659-453e-a688-e26020c68e43
+    username: sampleadmin
 credentialsMode: Manual
 publish: External
 pullSecret: '{"auths": ...}' <1>
 ifndef::openshift-origin[]
-fips: false <6>
-sshKey: ssh-ed25519 AAAA... <7>
+fips: false <5>
+sshKey: ssh-ed25519 AAAA... <6>
 endif::openshift-origin[]
 ifdef::openshift-origin[]
-sshKey: ssh-ed25519 AAAA... <6>
+sshKey: ssh-ed25519 AAAA... <5>
 endif::openshift-origin[]
 ----
 <1> Required. The installation program prompts you for this value.
-<2> The `controlPlane` section is a single mapping, but the compute section is a sequence of mappings. To meet the requirements of the different data structures, the first line of the `compute` section must begin with a hyphen, `-`, and the first line of the `controlPlane` section must not. Although both sections currently define a single machine pool, it is possible that future versions of {product-title} will support defining multiple compute pools during installation. Only one control plane pool is used.
-<3> Whether to enable or disable simultaneous multithreading, or `hyperthreading`. By default, simultaneous multithreading is enabled to increase the performance of your machines' cores. You can disable it by setting the parameter value to `Disabled`. If you disable simultaneous multithreading in some cluster machines, you must disable it in all cluster machines.
+<2> If you do not provide these parameters and values, the installation program provides the default value.
+<3> The `controlPlane` section is a single mapping, but the compute section is a sequence of mappings. To meet the requirements of the different data structures, the first line of the `compute` section must begin with a hyphen, `-`, and the first line of the `controlPlane` section must not. Although both sections currently define a single machine pool, it is possible that future versions of {product-title} will support defining multiple compute pools during installation. Only one control plane pool is used.
+<4> Whether to enable or disable simultaneous multithreading, or `hyperthreading`. By default, simultaneous multithreading is enabled to increase the performance of your machines' cores. You can disable it by setting the parameter value to `Disabled`. If you disable simultaneous multithreading in some cluster machines, you must disable it in all cluster machines.
 +
 [IMPORTANT]
 ====
-If you disable simultaneous multithreading, ensure that your capacity planning accounts for the dramatically decreased machine performance.
+If you disable simultaneous multithreading, ensure that your capacity planning accounts for the dramatically decreased machine performance. Use larger machine types, such as `n1-standard-8`, for your machines if you disable simultaneous multithreading.
 ====
-<4> Optional: Provide additional configuration for the machine pool parameters for the compute and control plane machines.
 ifndef::openshift-origin[]
-<5> Optional: By default, the installation program downloads and installs the {op-system-first} image. If Prism Central does not have internet access, you can override the default behavior by hosting the {op-system} image on any HTTP server and pointing the installation program to the image.
-<6> Whether to enable or disable FIPS mode. By default, FIPS mode is not enabled. If FIPS mode is enabled, the {op-system-first} machines that {product-title} runs on bypass the default Kubernetes cryptography suite and use the cryptography modules that are provided with {op-system} instead.
+<5> Whether to enable or disable FIPS mode. By default, FIPS mode is not enabled. If FIPS mode is enabled, the {op-system-first} machines that {product-title} runs on bypass the default Kubernetes cryptography suite and use the cryptography modules that are provided with {op-system} instead.
 +
 [IMPORTANT]
 ====
 The use of FIPS Validated or Modules in Process cryptographic libraries is only supported on {product-title} deployments on the `x86_64` architecture.
 ====
-<7> Optional: You can provide the `sshKey` value that you use to access the machines in your cluster.
+<6> You can optionally provide the `sshKey` value that you use to access the machines in your cluster.
 endif::openshift-origin[]
 ifdef::openshift-origin[]
-<5> Optional: By default, the installation program downloads and installs the {op-system-first} image. If Prism Central does not have internet access, you can override the default behavior by hosting the {op-system} image on any HTTP server and pointing the installation program to the image.
-<6> Optional: You can provide the `sshKey` value that you use to access the machines in your cluster.
+<5> You can optionally provide the `sshKey` value that you use to access the machines in your cluster.
 endif::openshift-origin[]
 +
 [NOTE]
