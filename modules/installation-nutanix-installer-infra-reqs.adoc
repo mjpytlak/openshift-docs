@@ -7,75 +7,7 @@ Before you install an {product-title} cluste, review the following Nutanix AOS e
 [id="installation-nutanix-installer-infra-reqs-account_{context}"]
 == Required account privileges
 
-The installation program requires access to an account with privileges to read and create the required resources. Using an account that has global administrative privileges is the simplest way to access all of the necessary permissions.
-
-If you cannot use an account with global administrative privileges, you must create roles to grant the privileges necessary for {product-title} cluster installation. While most of the privileges are always required, some are required only if you plan for the installation program to provision a folder to contain the {product-title} cluster on your Nutanix instance, which is the default behavior. You must create or amend Nutanix roles for the specified objects to grant the required privileges.
-
-An additional role is required if the installation program is to create a Nutanix virtual machine folder.
-
-.Roles and privileges required for installation
-[%collapsible]
-====
-[cols="3a,3a,3a",options="header"]
-|===
-|Nutanix object for role
-|When required
-|Required privileges
-
-|TBD
-|TBD
-|
-[%hardbreaks]
-`TBD`
-`TBD`
-`TBD`
-
-|TBD
-|TBD
-|
-[%hardbreaks]
-`TBD`
-`TBD`
-`TBD`
-
-|TBD
-|TBD
-|
-[%hardbreaks]
-`TBD`
-`TBD`
-`TBD`
-|===
-====
-
-Additionally, the user requires some `ReadOnly` permissions, and some of the roles require permission to propogate the permissions to child objects. These settings vary depending on whether or not you install the cluster into an existing folder.
-
-.Required permissions and propagation settings
-[%collapsible]
-====
-[cols="3a,3a,3a,3a",options="header"]
-|===
-|Nutanix object
-|Folder type
-|Propagate to children
-|Permissions required
-
-|TBD
-|TBD
-|TBD
-|TBD
-
-|TBD
-|TBD
-|TBD
-|TBD
-
-|TBD
-|TBD
-|TBD
-|TBD
-|===
-====
+Installing a cluster to Nutanix requires an account with administrative privileges to read and create the required resources.
 
 [id="installation-nutanix-installer-infra-reqs-limits_{context}"]
 == Cluster limits

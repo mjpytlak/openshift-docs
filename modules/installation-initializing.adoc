@@ -318,9 +318,9 @@ endif::nutanix[]
 ifndef::osp[]
 ifndef::rhv,alibabacloud-default,alibabacloud-custom[]
 ... Enter a descriptive name for your cluster.
-ifdef::vsphere,vmc[]
-The cluster name must be the same one that you used in the DNS records that you configured.
-endif::vsphere,vmc[]
+ifdef::vsphere,vmc,nutanix[]
+The cluster name you enter must match the cluster name you specified when configuring the DNS records.
+endif::vsphere,vmc,nutanix[]
 endif::rhv,alibabacloud-default,alibabacloud-custom[]
 endif::osp[]
 ifdef::osp[]
@@ -427,10 +427,10 @@ compute:
 <1> Set to `0`.
 endif::[]
 
-ifndef::restricted,alibabacloud-default,alibabacloud-custom[]
+ifndef::restricted,alibabacloud-default,alibabacloud-custom,nutanix[]
 . Modify the `install-config.yaml` file. You can find more information about
 the available parameters in the "Installation configuration parameters" section.
-endif::restricted,alibabacloud-default,alibabacloud-custom[]
+endif::restricted,alibabacloud-default,alibabacloud-custom,nutanix[]
 
 ifdef::alibabacloud-default,alibabacloud-custom[]
 . Installing the cluster into Alibaba Cloud requires that the Cloud Credential Operator (CCO) operate in manual mode. Modify the `install-config.yaml` file to set the `credentialsMode` parameter to `Manual`:
@@ -578,6 +578,12 @@ For these values, use the `imageContentSources` that you recorded during mirror 
 . Make any other modifications to the `install-config.yaml` file that you require. You can find more information about
 the available parameters in the *Installation configuration parameters* section.
 endif::restricted[]
+
+ifdef::nutanix[]
+. Optional: Update one or more of the default configuration parameters in the `install.config.yaml` file to customize the installation.
++
+For more information about the parameters, see "Installation configuration parameters".
+endif::nutanix[]
 
 . Back up the `install-config.yaml` file so that you can use
 it to install multiple clusters.

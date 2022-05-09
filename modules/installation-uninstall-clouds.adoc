@@ -20,9 +20,6 @@ endif::[]
 ifeval::["{context}" == "uninstalling-cluster-ibm-cloud"]
 :ibm-cloud:
 endif::[]
-ifeval::["{context}" == "uninstalling-cluster-nutanix"]
-:nutanix:
-endif::[]
 
 :_content-type: PROCEDURE
 [id="installation-uninstall-clouds_{context}"]
@@ -50,10 +47,8 @@ endif::gcp[]
 * You have a copy of the installation program that you used to deploy the cluster.
 * You have the files that the installation program generated when you created your
 cluster.
-ifdef::ibm-cloud,nutanix[]
-* You have configured the `ccoctl` binary.
-endif::ibm-cloud,nutanix[]
 ifdef::ibm-cloud[]
+* You have configured the `ccoctl` binary.
 * You have installed the IBM Cloud CLI and installed or updated the VPC infrastructure service plug-in. For more information see "Prerequisites" in the link:https://cloud.ibm.com/docs/vpc?topic=vpc-infrastructure-cli-plugin-vpc-reference&interface=ui#cli-ref-prereqs[IBM Cloud VPC CLI documentation].
 endif::ibm-cloud[]
 
@@ -133,18 +128,6 @@ If your cluster uses Technology Preview features that are enabled by the `TechPr
 --
 endif::ibm-cloud[]
 
-ifdef::nutanix[]
-. Remove the manual CCO credentials that were created for the cluster:
-+
-[source,terminal]
-----
-$ ccoctl nutanix delete-service-id \
-    --credentials-requests-dir <path_to_credential_requests_directory> \
-    --name <cluster_name>
-----
-endif::nutanix[]
-// The above CCO credential removal for IBM Cloud and Nutanix is only necessary for manual mode. Future releases that support other credential methods will not require this step.
-
 . Optional: Delete the `<installation_directory>` directory and the
 {product-title} installation program.
 
@@ -157,6 +140,5 @@ endif::[]
 ifeval::["{context}" == "uninstalling-cluster-ibm-cloud"]
 :!ibm-cloud:
 endif::[]
-ifeval::["{context}" == "uninstalling-cluster-nutanix"]
-:!nutanix:
-endif::[]
+
+// The above CCO credential removal for IBM Cloud is only necessary for manual mode. Future releases that support other credential methods will not require this step.
