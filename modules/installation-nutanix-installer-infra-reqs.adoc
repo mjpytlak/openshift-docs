@@ -23,18 +23,17 @@ When you deploy a {product-title} cluster that uses installer-provisioned infras
 
 A standard {product-title} installation creates the following resources:
 
-* 1 Folder
-* 1 Tag category
+* 1 label
 * Virtual machines:
-** 1 template
+** 1 disk image
 ** 1 temporary bootstrap node
-** 3 control plan nodes
+** 3 control plane nodes
 ** 3 compute machines
 
 [id="installation-nutanix-installer-infra-requirements-networking_{context}"]
 == Networking requirements
 
-You must use DHCP for the network and ensure that the DHCP server is configured to provide persistent IP addresses to the cluster machines. Additionally, create the following networking resources before you install the {product-title} cluster:
+You must use AHV IP Address Management (IPAM) for the network and ensure that it is configured to provide persistent IP addresses to the cluster machines. Additionally, create the following networking resources before you install the {product-title} cluster:
 
 * IP addresses
 * DNS records

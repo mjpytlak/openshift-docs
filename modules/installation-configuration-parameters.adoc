@@ -1577,7 +1577,7 @@ Additional Nutanix configuration parameters are described in the following table
 |String
 
 |`platform.nutanix.subnetUUIDs`
-|The UUID of the subnet that is linked to the Prism Element, which is managing the {product-title} cluster. [^2^]
+|The UUID of the Prism Element network that contains the virtual IP addresses and DNS records that you configured. [^2^]
 |String
 |====
 [.small]
