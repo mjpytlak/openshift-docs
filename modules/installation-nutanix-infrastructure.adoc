@@ -6,14 +6,13 @@
 [id="installation-nutanix-infrastructure_{context}"]
 = Nutanix version requirements
 
-You must install the {product-title} cluster on Nutanix AOS version <to do> (6.0.1 or later?) that meets the following requirements.
+You must install the {product-title} cluster to a Nutanix environment that meets the following requirements.
 
 
 .Version requirements for Nutanix virtual environments
 [cols=2, options="header"]
 |===
-|Virtual environment product |Required version
-|VM hardware version | TBD
-|Nutanix AHV | TBD
+|Component |Required version
+|Nutanix AOS | TBD
 |Prism Central | TBD
 |===

@@ -31,6 +31,8 @@ include::modules/manually-configure-iam-nutanix.adoc[leveloffset=+1]
 
 include::modules/installation-launching-installer.adoc[leveloffset=+1]
 
+include::modules/cli-installing-cli.adoc[leveloffset=+1]
+
 == Configuring the default storage container
 
 After you install the cluster, you must configure the default storage container for the cluster.
@@ -40,7 +42,7 @@ After you install the cluster, you must configure the default storage container 
 include::modules/cluster-telemetry.adoc[leveloffset=+1]
 
 [role="_additional-resources"]
-.Additional resources
+== Additional resources
 
 * xref:../../support/remote_health_monitoring/about-remote-health-monitoring.adoc#about-remote-health-monitoring[About remote health monitoring]
 

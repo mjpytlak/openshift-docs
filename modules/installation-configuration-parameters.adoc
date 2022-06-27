@@ -1542,36 +1542,53 @@ Additional Nutanix configuration parameters are described in the following table
 
 |`platform.nutanix.apiVIP`
 |The virtual IP (VIP) address that you configured for control plane API access.
-|IP address.
+|IP address
 
 |`platform.nutanix.ingressVIP`
 |The virtual IP (VIP) address that you configured for cluster ingress.
-|IP address.
+|IP address
 
-|`platform.nutanix.password`
-|The password for the Prism Central user name.
-|String
-
-|`platform.nutanix.port`
-|The port used to log into Prism Central.
-|String
-
-|`platform.nutanix.PrismCentral`
+|`platform.nutanix.prismCentral.endpoint.address`
 |The Prism Central domain name or IP address.
 |String
 
-|`platform.nutanix.prismElementUUID`
+|`platform.nutanix.prismCentral.endpoint.port`
+|The port that is used to log into Prism Central.
+|String
+
+|`platform.nutanix.prismCentral.password`
+|The password for the Prism Central user name.
+|String
+
+|`platform.nutanix.prismCentral.username`
+|The username that is used to log into Prism Central.
+|String
+
+|`platform.nutanix.prismElments.endpoint.address`
+|The Prism Element domain name or IP address. [^1^]
+|String
+
+|`platform.nutanix.prismElments.endpoint.port`
+|The port that is used to log into Prism Element.
+|String
+
+|`platform.nutanix.prismElements.uuid`
 |The universally unique identifier (UUID) for Prism Element.
 |String
 
-|`platform.vsphere.subnetUUID`
-|The UUID of the subnet that is linked to the Prism Element that is managing the {product-title} cluster.
+|`platform.nutanix.subnetUUIDs`
+|The UUID of the Prism Element network that contains the virtual IP addresses and DNS records that you configured. [^2^]
 |String
 
-|`platform.nutanix.username`
-|The username for logging into Prism Central.
-|String.
+|`platform.nutanix.clusterOSImage`
+|Optional: By default, the installation program downloads and installs the {op-system-first} image. If Prism Central does not have internet access, you can override the default behavior by hosting the {op-system} image on any HTTP server and pointing the installation program to the image.
+|An HTTP or HTTPS URL, optionally with a SHA-256 checksum. For example, \http://example.com/images/rhcos-47.83.202103221318-0-nutanix.x86_64.ova
 |====
+[.small]
+--
+1. `prismElements` lists a Prism Element (cluster) and all of the Nutanix resources that are used to host the {product-title} cluster. Only a single Prism Element is supported.
+2. Only one subnet per {product-title} cluster is supported.
+--
 endif::nutanix[]
 
 ifdef::bare[]

@@ -11,51 +11,41 @@ Installing the cluster requires that the Cloud Credential Operator (CCO) operate
 .Prerequisites
 
 * You have configured the `ccoctl` binary.
-* You have an existing `install-config.yaml` file.
-* You have set the following environment variables:
-+
-`NUTANIX_ENDPOINT`:: Specifies the endpoint for Prism Central.
-`Nutanix_PORT`:: Specifies the port that is used to log into Prism Central.
-`NUTANIX_USER`:: Specifies the username that is used to log into Prism Central.
-`NUTANIX_PASSWORD`:: Specifies the password that is used to log into Prism Central.
+
+* You have an `install-config.yaml` file.
 
 .Procedure
 
-. Edit the `install-config.yaml` configuration file so that the `credentialsMode` parameter is set to `Manual`.
+. Create a YAML file that contains the credentials data in the following format:
 +
-.Example `install-config.yaml` configuration file
+.Credentials data format
 [source,yaml]
 ----
-apiVersion: v1
-baseDomain: cluster1.example.com
-credentialsMode: Manual <1>
-compute:
-- architecture: amd64
-  hyperthreading: Enabled
-...
+credentials:
+- type: basic_auth <1>
+  data:
+    prismCentral: <2>
+      username: <username_for_prism_central>
+      password: <password_for_prism_central>
+    prismElements: <3>
+    - name: <name_of_prism_element>
+      username: <username_for_prism_element>
+      password: <password_for_prism_element>
 ----
-<1> Add this line to set the `credentialsMode` parameter to `Manual`.
+<1> Specify the authentication type. Only basic authentication is supported.
+<2> Specify the Prism Central credentials.
+<3> Optional: Specify the Prism Element credentials.
 
-. Extract the list of CredentialsRequest custom resources (CRs) from the {product-title} release image:
+. Extract the list of `CredentialsRequest` custom resources (CRs) from the {product-title} release image by running the following command:
 +
 [source,terminal]
 ----
 $ oc adm release extract --credentials-requests --cloud=nutanix \
---to=<path_to_directory_with_list_of_credentials_requests>/credrequests \
+--to=<path_to_directory_with_list_of_credentials_requests>/credrequests \ <1>
 quay.io/<path_to>/ocp-release:<version>
 ----
-
-. Use the `ccoctl` tool to process all of the `CredentialsRequest` objects in the `credrequests` directory:
 +
-[source,terminal]
-----
-$ ccoctl nutanix create-shared-secrets \
---credentials-requests-dir=<path_to_directory_with_list_of_credentials_requests>/credrequests \ <1>
---output-dir=<destination_directory> <2>
-----
-+
-<1> Specifies the path to the directory that contains the files for the component `CredentialsRequests` objects.
-<2> Specifies the directory that contains the files of the component credentials secrets, under the `manifests` directory.
+<1> Specify the path to the directory that contains the files for the component `CredentialsRequests` objects.
 +
 .Sample `CredentialsRequest` object
 [source,yaml]
@@ -78,21 +68,59 @@ $ ccoctl nutanix create-shared-secrets \
       namespace: openshift-machine-api
 ----
 
-. Create the installation manifests:
+. Use the `ccoctl` tool to process all of the `CredentialsRequest` objects in the `credrequests` directory by running the following command:
++
+[source,terminal]
+----
+$ ccoctl nutanix create-shared-secrets \
+--credentials-requests-dir=<path_to_directory_with_list_of_credentials_requests>/credrequests \ <1>
+--output-dir=<ccoctl_output_dir> \ <2>
+--credentials-source-filepath=<path_to_credentials_file> <3>
+----
++
+<1> Specify the path to the directory that contains the files for the component `CredentialsRequests` objects.
+<2> Specify the directory that contains the files of the component credentials secrets, under the `manifests` directory. By default, `ccoctl` creates objects in the directory in which the commands are run. To create the objects in a different directory, use the `--output-dir` flag.
+<3> Optional: Specify the directory that contains the credentials data YAML file. By default, `ccoctl` expects this file to be in `<home_directory>/.nutanix/credentials`. To specify a different directory, use the `--credentials-source-filepath` flag.
+
+. Edit the `install-config.yaml` configuration file so that the `credentialsMode` parameter is set to `Manual`.
++
+.Example `install-config.yaml` configuration file
+[source,yaml]
+----
+apiVersion: v1
+baseDomain: cluster1.example.com
+credentialsMode: Manual <1>
+...
+----
+<1> Add this line to set the `credentialsMode` parameter to `Manual`.
+
+. Create the installation manifests by running the following command:
 +
 [source,terminal]
 ----
 $ openshift-install create manifests --dir <installation_directory><1>
 ----
-<1> `<installation_directory>` specifies the name of the directory that contains the `install-config.yaml` file for your cluster.
+<1> Specify the path to the directory that contains the `install-config.yaml` file for your cluster.
 
-. Copy the generated credential files to the target manifests directory:
+. Copy the generated credential files to the target manifests directory by running the following command:
 +
 [source,terminal]
 ----
-$ cp <output_dir>/manifests/*credentials.yaml ./<installation_directory>/manifests
+$ cp <ccoctl_output_dir>/manifests/*credentials.yaml ./<installation_directory>/manifests
 ----
 
 .Verification
 
-* Ensure that the appropriate secrets were generated in your cluster's `manifests` directory.
+* Ensure that the appropriate secrets exist in the `manifests` directory.
++
+[source,terminal]
+----
+$ ls ./<installation_directory>/manifests
+----
++
+.Example output
++
+[source,terminal]
+----
+#Is there a sample output here?#
+----

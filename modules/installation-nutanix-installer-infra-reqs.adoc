@@ -2,80 +2,12 @@
 [id="installation-nutanix-installer-infra-reqs_{context}"]
 = Environment requirements
 
-Before you install an {product-title} cluste, review the following Nutanix AOS environment requirements.
+Before you install an {product-title} cluster, review the following Nutanix AOS environment requirements.
 
 [id="installation-nutanix-installer-infra-reqs-account_{context}"]
 == Required account privileges
 
-The installation program requires access to an account with privileges to read and create the required resources. Using an account that has global administrative privileges is the simplest way to access all of the necessary permissions.
-
-If you cannot use an account with global administrative privileges, you must create roles to grant the privileges necessary for {product-title} cluster installation. While most of the privileges are always required, some are required only if you plan for the installation program to provision a folder to contain the {product-title} cluster on your Nutanix instance, which is the default behavior. You must create or amend Nutanix roles for the specified objects to grant the required privileges.
-
-An additional role is required if the installation program is to create a Nutanix virtual machine folder.
-
-.Roles and privileges required for installation
-[%collapsible]
-====
-[cols="3a,3a,3a",options="header"]
-|===
-|Nutanix object for role
-|When required
-|Required privileges
-
-|TBD
-|TBD
-|
-[%hardbreaks]
-`TBD`
-`TBD`
-`TBD`
-
-|TBD
-|TBD
-|
-[%hardbreaks]
-`TBD`
-`TBD`
-`TBD`
-
-|TBD
-|TBD
-|
-[%hardbreaks]
-`TBD`
-`TBD`
-`TBD`
-|===
-====
-
-Additionally, the user requires some `ReadOnly` permissions, and some of the roles require permission to propogate the permissions to child objects. These settings vary depending on whether or not you install the cluster into an existing folder.
-
-.Required permissions and propagation settings
-[%collapsible]
-====
-[cols="3a,3a,3a,3a",options="header"]
-|===
-|Nutanix object
-|Folder type
-|Propagate to children
-|Permissions required
-
-|TBD
-|TBD
-|TBD
-|TBD
-
-|TBD
-|TBD
-|TBD
-|TBD
-
-|TBD
-|TBD
-|TBD
-|TBD
-|===
-====
+Installing a cluster to Nutanix requires an account with administrative privileges to read and create the required resources.
 
 [id="installation-nutanix-installer-infra-reqs-limits_{context}"]
 == Cluster limits
@@ -91,18 +23,17 @@ When you deploy a {product-title} cluster that uses installer-provisioned infras
 
 A standard {product-title} installation creates the following resources:
 
-* 1 Folder
-* 1 Tag category
+* 1 label
 * Virtual machines:
-** 1 template
+** 1 disk image
 ** 1 temporary bootstrap node
-** 3 control plan nodes
+** 3 control plane nodes
 ** 3 compute machines
 
 [id="installation-nutanix-installer-infra-requirements-networking_{context}"]
 == Networking requirements
 
-You must use DHCP for the network and ensure that the DHCP server is configured to provide persistent IP addresses to the cluster machines. Additionally, create the following networking resources before you install the {product-title} cluster:
+You must use AHV IP Address Management (IPAM) for the network and ensure that it is configured to provide persistent IP addresses to the cluster machines. Additionally, create the following networking resources before you install the {product-title} cluster:
 
 * IP addresses
 * DNS records
