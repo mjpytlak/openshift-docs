@@ -2,7 +2,7 @@
 [id="installation-nutanix-installer-infra-reqs_{context}"]
 = Environment requirements
 
-Before you install an {product-title} cluste, review the following Nutanix AOS environment requirements.
+Before you install an {product-title} cluster, review the following Nutanix AOS environment requirements.
 
 [id="installation-nutanix-installer-infra-reqs-account_{context}"]
 == Required account privileges

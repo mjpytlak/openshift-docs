@@ -27,7 +27,7 @@ compute: <2>
       coresPerSocket: 2
       memoryMiB: 8196
       osDisk:
-        diskSizeMiB: 120
+        diskSizeGiB: 120
 controlPlane: <2>
   hyperthreading: Enabled <3>
   name: master
@@ -38,7 +38,7 @@ controlPlane: <2>
       coresPerSocket: 2
       memoryMiB: 16384
       osDisk:
-        diskSizeMiB: 120
+        diskSizeGiB: 120
 metadata:
   creationTimestamp: null
   name: test-cluster <1>
